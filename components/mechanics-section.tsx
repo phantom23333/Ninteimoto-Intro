@@ -6,8 +6,11 @@ import { ArrowRight, ChevronDown, Plus, Play, Volume2, VolumeX, Maximize2 } from
 import Image from "next/image"
 import { ASSETS } from "@/lib/assets"
 import { cn } from "@/lib/utils"
+import { useLanguage } from "@/components/language-provider"
 
 export function MechanicsSection() {
+  const { language } = useLanguage()
+
   return (
     <section id="mechanics" className="py-24 md:py-32 bg-[#080808] text-white">
       <div className="container mx-auto px-6 md:px-12">
@@ -18,7 +21,7 @@ export function MechanicsSection() {
             className="mb-16"
         >
              <span className="font-mono text-xs tracking-[0.3em] text-white/50 uppercase mb-4 block">02 — MECHANICS</span>
-             <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light tracking-tight">AI-Native Core</h2>
+             <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light tracking-tight">{language === 'zh' ? "AI 原生核心" : "AI-Native Core"}</h2>
         </motion.div>
 
         {/* Intro Video Player */}
@@ -26,26 +29,32 @@ export function MechanicsSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <MechanicCard
-            title="Psychology Driven"
-            category="Cognitive Behavior"
-            subtitle="超越脚本的真实反馈"
-            detailText="摒弃传统的脚本树（Script Tree）。我们引入 CBT（认知行为理论）构建 NPC 的心理模型。你的每一句话都会实时修正 NPC 的焦虑值、依赖度与认知偏差，从而改变剧情走向。"
+            title={language === 'zh' ? "心理驱动" : "Psychology Driven"}
+            category={language === 'zh' ? "认知行为" : "Cognitive Behavior"}
+            subtitle={language === 'zh' ? "超越脚本的真实反馈" : "Authentic Feedback Beyond Scripts"}
+            detailText={language === 'zh' 
+                ? "摒弃传统的脚本树（Script Tree）。我们引入 CBT（认知行为理论）构建 NPC 的心理模型。你的每一句话都会实时修正 NPC 的焦虑值、依赖度与认知偏差，从而改变剧情走向。" 
+                : "Abandoning traditional script trees. We introduce CBT (Cognitive Behavioral Theory) to build NPC psychological models. Every word you say real-time corrects the NPC's anxiety, dependency, and cognitive bias, thereby changing the plot direction."}
             index={0}
             image={ASSETS.images.backgrounds.abstractDark}
           />
           <MechanicCard
-            title="Dynamic Performance"
-            category="Generative Interaction"
-            subtitle="拒绝僵硬的站桩对话"
-            detailText="整合 LLM 与 Motion Generation 模型。NPC 的回答、表情微动、肢体语言均由 AI 实时演算。没有预渲染的动画，只有当下这一刻的真实反应。"
+            title={language === 'zh' ? "动态演出" : "Dynamic Performance"}
+            category={language === 'zh' ? "生成式交互" : "Generative Interaction"}
+            subtitle={language === 'zh' ? "拒绝僵硬的站桩对话" : "No More Stiff Idle Dialogues"}
+            detailText={language === 'zh' 
+                ? "整合 LLM 与 Motion Generation 模型。NPC 的回答、表情微动、肢体语言均由 AI 实时演算。没有预渲染的动画，只有当下这一刻的真实反应。" 
+                : "Integrating LLM and Motion Generation models. NPC responses, micro-expressions, and body language are all calculated by AI in real-time. No pre-rendered animations, only authentic reactions in the moment."}
             index={1}
             image={ASSETS.images.backgrounds.soundWave}
           />
           <MechanicCard
-            title="Idealized Fidelity"
-            category="The Aesthetic"
-            subtitle="去除“数字油腻感”"
-            detailText="基于 UE5 Substrate 材质系统，我们分离了‘肉体’与‘妆面’。配合高调摄影（High-Key）光照策略，呈现出如同偶像写真般通透、纯净的次时代视觉体验。"
+            title={language === 'zh' ? "理想化拟真" : "Idealized Fidelity"}
+            category={language === 'zh' ? "美学风格" : "The Aesthetic"}
+            subtitle={language === 'zh' ? "去除“数字油腻感”" : "Eliminating 'Digital Greasiness'"}
+            detailText={language === 'zh' 
+                ? "基于 UE5 Substrate 材质系统，我们分离了‘肉体’与‘妆面’。配合高调摄影（High-Key）光照策略，呈现出如同偶像写真般通透、纯净的次时代视觉体验。" 
+                : "Based on the UE5 Substrate material system, we separated 'flesh' and 'makeup'. Combined with High-Key lighting strategies, presenting a translucent, pure next-gen visual experience like idol photography."}
             index={2}
             image={ASSETS.images.backgrounds.abstractMemory}
           />
@@ -147,6 +156,7 @@ function MechanicCard({
   index: number
   image: string
 }) {
+  const { language } = useLanguage()
   const [isOpen, setIsOpen] = useState(true)
 
   return (
@@ -194,7 +204,7 @@ function MechanicCard({
           onClick={() => setIsOpen(!isOpen)}
           className="flex items-center gap-2 text-xs font-mono tracking-widest uppercase text-white/50 hover:text-white transition-colors"
         >
-          {isOpen ? "Less Details" : "Learn More"}
+          {isOpen ? (language === 'zh' ? "收起详情" : "Less Details") : (language === 'zh' ? "了解更多" : "Learn More")}
           <ChevronDown className={`w-3 h-3 transition-transform ${isOpen ? "rotate-180" : ""}`} />
         </button>
       </div>

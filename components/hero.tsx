@@ -3,8 +3,10 @@
 import { useRef, useEffect } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { SentientSphere } from "./sentient-sphere"
+import { useLanguage } from "@/components/language-provider"
 
 export function Hero() {
+  const { language } = useLanguage()
   const containerRef = useRef<HTMLElement>(null)
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -64,13 +66,13 @@ export function Hero() {
           
           <div className="space-y-4">
             <h2 className="font-sans text-xl md:text-2xl font-light tracking-widest text-white/80 uppercase">
-              Sliced Memory Reconstruction RPG
-            </h2>
-            <p className="font-sans text-sm md:text-base tracking-wide text-white/60">
-              "在无限的记忆回路中，寻找被遗忘的真相。"
-            </p>
-          </div>
-        </motion.div>
+            Sliced Memory Reconstruction RPG
+          </h2>
+          <p className="font-sans text-sm md:text-base tracking-wide text-white/60">
+            {language === 'zh' ? "\"在无限的记忆回路中，寻找被遗忘的真相。\"" : "\"Reconstruct forgotten truths in infinite memory loops.\""}
+          </p>
+        </div>
+      </motion.div>
 
         {/* Center Button */}
         <motion.div

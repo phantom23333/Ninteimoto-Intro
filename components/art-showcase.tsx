@@ -5,20 +5,25 @@ import { motion } from "framer-motion"
 import { SakuraClassroom } from "@/components/sakura-classroom"
 import { cn } from "@/lib/utils"
 import { Play } from "lucide-react"
+import { useLanguage } from "@/components/language-provider"
 
 export function ArtShowcase() {
+  const { language } = useLanguage()
+
   return (
     <section id="art-showcase" className="bg-black text-white">
       {/* 标题页 / 过渡 */}
       <div className="py-24 px-6 md:px-12 border-b border-white/10">
         <span className="font-mono text-xs tracking-[0.3em] text-emerald-500 uppercase mb-4 block">
-            04 — AESTHETICS
+            {language === 'zh' ? "04 — 美学设计" : "04 — AESTHETICS"}
         </span>
         <h2 className="font-serif text-4xl md:text-6xl font-light tracking-tight max-w-3xl">
-            Immersive Art Gallery
+            {language === 'zh' ? "沉浸式艺术画廊" : "Immersive Art Gallery"}
         </h2>
         <p className="mt-6 text-white/60 max-w-xl font-sans text-lg">
-            全屏沉浸式体验。每一个像素都经过精心雕琢，融合 NPR 非真实感渲染与次时代光影。
+            {language === 'zh' 
+                ? "全屏沉浸式体验。每一个像素都经过精心雕琢，融合 NPR 非真实感渲染与次时代光影。" 
+                : "Full-screen immersive experience. Every pixel carefully sculpted, blending NPR non-photorealistic rendering with next-gen lighting."}
         </p>
       </div>
 
@@ -31,16 +36,16 @@ export function ArtShowcase() {
         
         {/* 覆盖文字 */}
         <div className="absolute top-12 left-6 md:left-12 pointer-events-none z-10 mix-blend-difference text-white">
-            <h3 className="font-serif text-3xl mb-2">Seasonal Classroom</h3>
-            <p className="font-mono text-xs opacity-70 uppercase tracking-widest">Real-time 3D Rendering</p>
+            <h3 className="font-serif text-3xl mb-2">{language === 'zh' ? "四季教室" : "Seasonal Classroom"}</h3>
+            <p className="font-mono text-xs opacity-70 uppercase tracking-widest">{language === 'zh' ? "实时 3D 渲染" : "Real-time 3D Rendering"}</p>
         </div>
       </div>
 
       {/* Part 2: Full Screen Lens Art 01 */}
       <FullScreenLensArt 
         index={1} 
-        title="Target Render Reference" 
-        subtitle="Concept Art / Environment"
+        title={language === 'zh' ? "目标渲染参考" : "Target Render Reference"}
+        subtitle={language === 'zh' ? "概念美术 / 环境" : "Concept Art / Environment"}
         color="bg-gradient-to-br from-slate-900 to-black" 
         bilibiliId="BV1qyTNzVEey"
       />
@@ -48,8 +53,8 @@ export function ArtShowcase() {
       {/* Part 3: Full Screen Lens Art 02 */}
       <FullScreenLensArt 
         index={2} 
-        title="商业模式"
-        subtitle="变现策略"
+        title={language === 'zh' ? "商业模式" : "Monetization Model"}
+        subtitle={language === 'zh' ? "变现策略" : "Commercial Strategy"}
         color="bg-gradient-to-bl from-emerald-950 to-black" 
       >
         <div className="max-w-6xl mx-auto w-full text-white/90 select-text cursor-auto py-12 px-6 relative z-30">
@@ -57,7 +62,7 @@ export function ArtShowcase() {
             <div className="relative mb-16 text-center">
                  <div className="inline-block border border-emerald-500/30 bg-emerald-950/20 backdrop-blur-md px-12 py-6 rounded-full shadow-[0_0_30px_-10px_rgba(16,185,129,0.3)]">
                     <p className="text-3xl md:text-5xl font-light text-white tracking-widest font-serif">
-                        免费游玩 <span className="text-emerald-500 mx-2 font-thin">+</span> 增值服务
+                        {language === 'zh' ? "免费游玩" : "Free to Play"} <span className="text-emerald-500 mx-2 font-thin">+</span> {language === 'zh' ? "增值服务" : "Value-Added Services"}
                     </p>
                  </div>
                  <p className="text-xs text-white/40 mt-6 font-mono uppercase tracking-[0.3em]">
@@ -74,12 +79,12 @@ export function ArtShowcase() {
                     
                     <h4 className="text-2xl font-mono text-emerald-400 font-bold uppercase tracking-wider mb-8 flex items-center gap-4">
                         <span className="w-1.5 h-8 bg-emerald-500 block shadow-[0_0_15px_rgba(16,185,129,0.5)]"/>
-                        叙事化广告
+                        {language === 'zh' ? "叙事化广告" : "Diegetic Advertising"}
                         <span className="text-xs text-white/30 font-normal normal-case ml-auto border border-white/10 px-2 py-1 rounded">Reverse CBT</span>
                     </h4>
                     
                     <p className="text-white/60 text-sm leading-relaxed mb-8 border-l border-white/10 pl-4 italic">
-                        "AI驱动的原生植入，严格整合在叙事中以保持沉浸感。"
+                        {language === 'zh' ? "\"AI驱动的原生植入，严格整合在叙事中以保持沉浸感。\"" : "\"AI-driven native placements, strictly integrated within narrative to maintain immersion.\""}
                     </p>
 
                     <div className="space-y-4">
@@ -88,8 +93,8 @@ export function ArtShowcase() {
                                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
                             </div>
                             <div>
-                                <div className="text-emerald-100 font-bold text-base mb-1">场景植入</div>
-                                <div className="text-white/40 text-xs leading-relaxed">基于玩家兴趣的动态屏幕广告，无缝融入环境。</div>
+                                <div className="text-emerald-100 font-bold text-base mb-1">{language === 'zh' ? "场景植入" : "Environment"}</div>
+                                <div className="text-white/40 text-xs leading-relaxed">{language === 'zh' ? "基于玩家兴趣的动态屏幕广告，无缝融入环境。" : "Dynamic ads on in-game screens based on player interests."}</div>
                             </div>
                         </div>
                         <div className="flex items-start gap-4 p-5 rounded-xl bg-black/40 border border-white/5 group-hover:border-emerald-500/20 transition-all hover:translate-x-1">
@@ -97,8 +102,8 @@ export function ArtShowcase() {
                                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" /></svg>
                             </div>
                             <div>
-                                <div className="text-emerald-100 font-bold text-base mb-1">角色植入</div>
-                                <div className="text-white/40 text-xs leading-relaxed">NPC自然对话中的上下文感知提及，拒绝生硬推销。</div>
+                                <div className="text-emerald-100 font-bold text-base mb-1">{language === 'zh' ? "角色植入" : "Character"}</div>
+                                <div className="text-white/40 text-xs leading-relaxed">{language === 'zh' ? "NPC自然对话中的上下文感知提及，拒绝生硬推销。" : "Context-aware product mentions by NPCs in natural dialogue."}</div>
                             </div>
                         </div>
                     </div>
@@ -112,15 +117,15 @@ export function ArtShowcase() {
 
                     <h4 className="text-2xl font-mono text-purple-400 font-bold uppercase tracking-wider mb-8 flex items-center gap-4">
                         <span className="w-1.5 h-8 bg-purple-500 block shadow-[0_0_15px_rgba(168,85,247,0.5)]"/>
-                        应用内购
+                        {language === 'zh' ? "应用内购" : "In-App Purchases"}
                         <span className="text-xs text-white/30 font-normal normal-case ml-auto border border-white/10 px-2 py-1 rounded">Value Services</span>
                     </h4>
 
                     <div className="space-y-4">
                         {[
-                            { title: "剧本扩展包", desc: "解锁记忆碎片 / 平行时间线", color: "text-purple-300", border: "group-hover:border-purple-500/30", bg: "bg-purple-500/10" },
-                            { title: "心理学工具", desc: "上帝视角 (隐藏数值) / 时光倒流", color: "text-blue-300", border: "group-hover:border-blue-500/30", bg: "bg-blue-500/10" },
-                            { title: "人格调优订阅", desc: "深度微调NPC性格特质的订阅服务", color: "text-pink-300", border: "group-hover:border-pink-500/30", bg: "bg-pink-500/10" }
+                            { title: language === 'zh' ? "剧本扩展包" : "Scenario Packs", desc: language === 'zh' ? "解锁记忆碎片 / 平行时间线" : "Unlock exclusive memory fragments or parallel timelines", color: "text-purple-300", border: "group-hover:border-purple-500/30", bg: "bg-purple-500/10" },
+                            { title: language === 'zh' ? "心理学工具" : "Psychological Tools", desc: language === 'zh' ? "上帝视角 (隐藏数值) / 时光倒流" : "\"God View\" (Hidden Stats) / Time Rewind", color: "text-blue-300", border: "group-hover:border-blue-500/30", bg: "bg-blue-500/10" },
+                            { title: language === 'zh' ? "人格调优订阅" : "Persona Tuning", desc: language === 'zh' ? "深度微调NPC性格特质的订阅服务" : "Subscription to fine-tune NPC personality traits", color: "text-pink-300", border: "group-hover:border-pink-500/30", bg: "bg-pink-500/10" }
                         ].map((item, i) => (
                             <div key={i} className={`p-5 rounded-xl bg-black/40 border border-white/5 ${item.border} transition-all hover:scale-[1.02] flex items-center justify-between group/item`}>
                                 <div>
@@ -150,6 +155,7 @@ function FullScreenLensArt({
 }: { 
     index: number, title: string, subtitle: string, color: string, bilibiliId?: string, children?: React.ReactNode
 }) {
+  const { language } = useLanguage()
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const [isPlaying, setIsPlaying] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -239,7 +245,9 @@ function FullScreenLensArt({
         {/* 交互提示 */}
         {!isPlaying && (
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white/20 font-mono text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                {bilibiliId ? "Click to Play" : "Lens Mode Active"}
+                {bilibiliId 
+                    ? (language === 'zh' ? "点击播放" : "Click to Play") 
+                    : (language === 'zh' ? "透镜模式已激活" : "Lens Mode Active")}
             </div>
         )}
     </div>

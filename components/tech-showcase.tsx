@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Play, Pause, Activity, Globe, Mic, Smartphone, Zap, Maximize2, Terminal, Cpu, Box, Film, Disc, Volume2, VolumeX } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useLanguage } from "@/components/language-provider"
 
 import { ASSETS } from "@/lib/assets"
 
@@ -146,6 +147,7 @@ function WaveformVisualizer({ isPlaying, color = "#10b981" }: { isPlaying: boole
 // --- Main Component ---
 
 export function TechShowcase() {
+  const { language } = useLanguage()
   const [logs, setLogs] = useState<LogEntry[]>([])
   const [activeLang, setActiveLang] = useState('CN')
   const [activeSampleIndex, setActiveSampleIndex] = useState(0)
@@ -301,10 +303,10 @@ export function TechShowcase() {
             <div>
                 <span className="font-mono text-xs tracking-[0.3em] text-emerald-500 uppercase mb-4 block flex items-center gap-2">
                     <Terminal className="w-4 h-4" />
-                    03 — R&D LABS
+                    {language === 'zh' ? "03 — 研发实验室" : "03 — R&D LABS"}
                 </span>
                 <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light tracking-tight">
-                    Prototype <span className="text-white/30">Registry</span>
+                    {language === 'zh' ? "原型档案库" : "Prototype Registry"} <span className="text-white/30">{language === 'zh' ? "" : ""}</span>
                 </h2>
             </div>
             <div className="font-mono text-xs text-right hidden md:block text-white/40">
@@ -324,11 +326,11 @@ export function TechShowcase() {
              </div>
              <div className="flex items-center gap-4">
                  <div className="flex items-center gap-2">
-                     <span className="font-serif text-xs text-white/40">效果验证视频</span>
+                     <span className="font-serif text-xs text-white/40">{language === 'zh' ? "效果验证视频" : "Effect Verification Video"}</span>
                      <span className="font-mono text-[10px] text-white/30 uppercase tracking-widest">| Proof of Concept</span>
                  </div>
                  <a 
-                    href="https://www.bilibili.com/video/BV1QmBhBNExA" 
+                    href="https://www.bilibili.com/video/BV1QmBhBNExA"  
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-pink-500/10 border border-pink-500/20 text-pink-400 text-[10px] hover:bg-pink-500/20 transition-colors"
@@ -435,10 +437,10 @@ export function TechShowcase() {
                     <div>
                         <div className="flex items-center gap-2 mb-2">
                             <Mic className="w-4 h-4 text-emerald-500" />
-                            <h3 className="font-mono text-xs uppercase tracking-widest text-emerald-500">TTS Synthesizer</h3>
+                            <h3 className="font-mono text-xs uppercase tracking-widest text-emerald-500">{language === 'zh' ? "TTS 语音合成" : "TTS Synthesizer"}</h3>
                         </div>
-                        <h4 className="font-serif text-2xl mb-1">Emotive Voice Synthesis</h4>
-                        <p className="text-sm text-white/50">STATE OF THE ART 的多语言合成水平</p>
+                        <h4 className="font-serif text-2xl mb-1">{language === 'zh' ? "情感化语音合成" : "Emotive Voice Synthesis"}</h4>
+                        <p className="text-sm text-white/50">{language === 'zh' ? "STATE OF THE ART 的多语言合成水平" : "State-of-the-art Multilingual Synthesis"}</p>
                     </div>
                     <div className="flex bg-white/5 p-1 rounded-lg">
                         {['EN', 'JP', 'CN'].map(lang => (
@@ -553,11 +555,11 @@ export function TechShowcase() {
                                  <Cpu className="w-8 h-8 text-white/20" />
                              )}
                          </div>
-                         <h3 className="font-mono text-xs text-emerald-500 uppercase tracking-widest mb-2">Lip-Sync Generated</h3>
+                         <h3 className="font-mono text-xs text-emerald-500 uppercase tracking-widest mb-2">{language === 'zh' ? "口型生成" : "Lip-Sync Generated"}</h3>
                          <div className="font-serif text-lg text-white/90 mb-1">
                              {activeLang} — {VOICE_SAMPLES[activeLang][activeSampleIndex].label}
                          </div>
-                         <p className="text-xs text-white/40">Real-time Viseme Mapping</p>
+                         <p className="text-xs text-white/40">{language === 'zh' ? "实时音素映射" : "Real-time Viseme Mapping"}</p>
                      </div>
                  </div>
 
@@ -578,7 +580,7 @@ export function TechShowcase() {
              <div className="p-6 rounded-xl border border-white/10 bg-white/[0.02] flex flex-col group hover:border-white/20 transition-colors">
                 <div className="flex items-center gap-2 mb-6">
                     <Disc className="w-4 h-4 text-pink-500" />
-                    <h3 className="font-mono text-xs uppercase tracking-widest text-pink-500">Audio Refinement</h3>
+                    <h3 className="font-mono text-xs uppercase tracking-widest text-pink-500">{language === 'zh' ? "音频精修" : "Audio Refinement"}</h3>
                 </div>
 
                 <div className="flex-1 flex flex-col justify-center space-y-6">
@@ -596,8 +598,8 @@ export function TechShowcase() {
                          </div>
                          <div className="flex-1 mx-4 flex flex-col justify-center min-w-0">
                               <div className="flex items-center gap-2 mb-1">
-                                <span className="text-xs text-white/60 font-mono">v5.0 BASELINE</span>
-                                <span className="text-[10px] px-1.5 py-0.5 bg-white/10 rounded text-white/40 uppercase">Legacy</span>
+                                <span className="text-xs text-white/60 font-mono">{language === 'zh' ? "v5.0 基准模型" : "v5.0 BASELINE"}</span>
+                                <span className="text-[10px] px-1.5 py-0.5 bg-white/10 rounded text-white/40 uppercase">{language === 'zh' ? "旧版" : "Legacy"}</span>
                               </div>
                               <div className="h-1 bg-white/10 rounded-full overflow-hidden w-full">
                                   <div className={cn("h-full bg-white/40 transition-all duration-500", activeAudio === 'track1' ? "w-full animate-pulse" : "w-0")} />
@@ -611,14 +613,14 @@ export function TechShowcase() {
                         onClick={() => toggleAudio('track2')}
                      >
                          <div className="absolute -top-2 -right-2 px-2 py-0.5 bg-gradient-to-r from-pink-500 to-purple-500 text-white text-[9px] font-bold uppercase tracking-wider rounded-full shadow-lg">
-                             New Architecture
+                             {language === 'zh' ? "新架构" : "New Architecture"}
                          </div>
                          <div className={cn("w-10 h-10 rounded-full flex items-center justify-center transition-colors shrink-0", activeAudio === 'track2' ? "bg-gradient-to-br from-pink-500 to-purple-600 text-white shadow-lg shadow-pink-500/20" : "bg-pink-500/10 text-pink-500")}>
                              {activeAudio === 'track2' ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-1" />}
                          </div>
                          <div className="flex-1 mx-4 flex flex-col justify-center min-w-0">
                               <div className="flex items-center gap-2 mb-1">
-                                <span className={cn("text-xs font-mono font-bold", activeAudio === 'track2' ? "text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400" : "text-pink-400")}>v5.2 REMASTERED</span>
+                                <span className={cn("text-xs font-mono font-bold", activeAudio === 'track2' ? "text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400" : "text-pink-400")}>{language === 'zh' ? "v5.2 重制版" : "v5.2 REMASTERED"}</span>
                                 <Zap className="w-3 h-3 text-yellow-400 fill-yellow-400 animate-pulse" />
                               </div>
                               <div className="h-1 bg-black/40 rounded-full overflow-hidden w-full">
@@ -630,7 +632,11 @@ export function TechShowcase() {
                      <div className="space-y-3 opacity-80 pt-2">
                          {['Vocal Consistency', 'Clarity', 'Range'].map((label, i) => (
                              <div key={label} className="flex items-center justify-between text-xs font-mono group">
-                                 <span className="text-white/40 uppercase group-hover:text-white/60 transition-colors">{label}</span>
+                                 <span className="text-white/40 uppercase group-hover:text-white/60 transition-colors">
+                                    {language === 'zh' ? (
+                                        i === 0 ? "人声一致性" : i === 1 ? "清晰度" : "音域"
+                                    ) : label}
+                                 </span>
                                  <div className="flex items-center gap-3">
                                      {/* Comparison Bar */}
                                      <div className="w-32 h-1.5 bg-white/5 rounded-full overflow-hidden relative">
@@ -655,7 +661,11 @@ export function TechShowcase() {
                          ))}
                      </div>
                      <p className="text-xs text-white/40 mt-2 leading-relaxed border-t border-white/5 pt-4">
-                        "通过新的重采样架构，v5.2 Remastered 版本在保持原曲律动的同时，将<span className="text-pink-400 font-bold">人声一致性 (Vocal Consistency)</span> 提升至商业级交付标准。"
+                        {language === 'zh' ? (
+                            <>"通过新的重采样架构，v5.2 Remastered 版本在保持原曲律动的同时，将<span className="text-pink-400 font-bold">人声一致性 (Vocal Consistency)</span> 提升至商业级交付标准。"</>
+                        ) : (
+                            <>"With the new resampling architecture, v5.2 Remastered elevates <span className="text-pink-400 font-bold">Vocal Consistency</span> to commercial delivery standards while maintaining the original groove."</>
+                        )}
                      </p>
                 </div>
             </div>
@@ -687,7 +697,7 @@ export function TechShowcase() {
                         <div className="flex justify-between items-start">
                              <div className="inline-flex items-center gap-2 px-2 py-1 rounded-full bg-black/40 border border-white/10 backdrop-blur-sm">
                                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                                <span className="font-mono text-[9px] text-emerald-500 uppercase tracking-widest">Generative Action</span>
+                                <span className="font-mono text-[9px] text-emerald-500 uppercase tracking-widest">{language === 'zh' ? "生成式动作" : "Generative Action"}</span>
                              </div>
 
                              {/* Motion Selector Tabs */}

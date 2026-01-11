@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata, Viewport } from "next"
 import { Playfair_Display, Geist_Mono, Inter } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
+import { LanguageProvider } from "@/components/language-provider"
 import "./globals.css"
 
 const playfair = Playfair_Display({
@@ -37,9 +38,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${playfair.variable} ${inter.variable} ${geistMono.variable}`}>
       <body className="font-sans antialiased overflow-x-hidden">
-        <div className="noise-overlay" />
-        {children}
-        <Analytics />
+        <LanguageProvider>
+          <div className="noise-overlay" />
+          {children}
+          <Analytics />
+        </LanguageProvider>
       </body>
     </html>
   )

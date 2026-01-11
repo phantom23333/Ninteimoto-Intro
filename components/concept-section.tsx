@@ -4,8 +4,10 @@ import { useRef, useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { cn } from "@/lib/utils"
 import { VisualCanvas } from "./concept-visuals"
+import { useLanguage } from "@/components/language-provider"
 
 export function ConceptSection() {
+  const { language } = useLanguage()
   const [activeSession, setActiveSession] = useState<'maze' | 'labyrinth'>('maze')
   const [isHovered, setIsHovered] = useState(false)
 
@@ -24,18 +26,22 @@ export function ConceptSection() {
   const content = {
     maze: {
         subtitle: "01 - SESSION - 00",
-        title: "The Maze",
-        desc: "Traditional Narrative",
-        detail: "传统游戏如同迷宫（Maze），有明确的入口与出口。玩家的目标是解开谜题、击败敌人并逃离。一旦通关，这部分记忆即宣告死亡，无法再生。",
+        title: language === 'zh' ? "迷宫 (Maze)" : "The Maze",
+        desc: language === 'zh' ? "传统叙事" : "Traditional Narrative",
+        detail: language === 'zh' 
+            ? "传统游戏如同迷宫（Maze），有明确的入口与出口。玩家的目标是解开谜题、击败敌人并逃离。一旦通关，这部分记忆即宣告死亡，无法再生。" 
+            : "Traditional games are like a Maze, with a clear entrance and exit. The goal is to solve puzzles, defeat enemies, and escape. Once cleared, that part of memory is dead and cannot be regenerated.",
         color: "text-emerald-500",
         borderColor: "border-emerald-500/30",
         bgGradient: "from-emerald-950/20 to-black"
     },
     labyrinth: {
         subtitle: "01 - SESSION - 01",
-        title: "The Labyrinth",
-        desc: "Memory Circuit",
-        detail: "Ninteimoto 构建了一个没有物理出口的回路。目标不是逃离，而是通过对话深入记忆核心。每一次选择都会基于蝴蝶效应重构叙事，让你在同一段记忆中抵达不同的真相深渊。",
+        title: language === 'zh' ? "回路 (Labyrinth)" : "The Labyrinth",
+        desc: language === 'zh' ? "记忆回路" : "Memory Circuit",
+        detail: language === 'zh' 
+            ? "Ninteimoto 构建了一个没有物理出口的回路。目标不是逃离，而是通过对话深入记忆核心。每一次选择都会基于蝴蝶效应重构叙事，让你在同一段记忆中抵达不同的真相深渊。" 
+            : "Ninteimoto constructs a circuit with no physical exit. The goal is not to escape, but to delve into the core of memory through dialogue. Every choice reconstructs the narrative based on the butterfly effect, leading you to different abysses of truth within the same memory.",
         color: "text-indigo-400",
         borderColor: "border-indigo-500/30",
         bgGradient: "from-indigo-950/20 to-black"

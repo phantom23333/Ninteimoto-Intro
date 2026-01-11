@@ -3,8 +3,10 @@
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { ArrowUpRight } from "lucide-react"
+import { useLanguage } from "@/components/language-provider"
 
 export function Footer() {
+  const { language } = useLanguage()
   const [time, setTime] = useState("")
   const [isHovered, setIsHovered] = useState(false)
 
@@ -76,7 +78,7 @@ export function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           {/* Local Time */}
           <div className="font-mono text-xs tracking-widest text-white/40">
-            <span className="mr-2">SYSTEM TIME</span>
+            <span className="mr-2">{language === 'zh' ? "系统时间" : "SYSTEM TIME"}</span>
             <span className="text-white tabular-nums">{time}</span>
           </div>
 
