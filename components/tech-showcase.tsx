@@ -160,7 +160,7 @@ export function TechShowcase() {
   const logsContainerRef = useRef<HTMLDivElement>(null)
   
   const [isPlaying, setIsPlaying] = useState(false)
-  const [isMainVideoMuted, setIsMainVideoMuted] = useState(true) // Default to muted
+  const [isMainVideoMuted, setIsMainVideoMuted] = useState(false) // Default to unmuted
   const [videoError, setVideoError] = useState(false)
 
   const togglePlay = () => {
