@@ -1,0 +1,45 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies (依赖包)
+/node_modules
+/.pnp
+.pnp.js
+
+# testing (测试覆盖率)
+/coverage
+
+# next.js (构建产物)
+/.next/
+/out/
+
+# production
+/build
+
+# misc (系统文件)
+.DS_Store
+*.pem
+Thumbs.db
+
+# debug (日志文件)
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (环境变量 - 防止密钥泄露)
+.env
+.env*.local
+
+# vercel (Vercel 部署缓存)
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# Editor directories and files (编辑器配置)
+.idea
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+*.swp
