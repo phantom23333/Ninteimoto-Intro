@@ -32,7 +32,7 @@ const MOTION_SAMPLES: MotionSample[] = [
   {
     id: 'm-1',
     label: 'Move',
-    prompt: "A cyberpunk samurai drawing her katana in slow motion, rain falling.",
+    prompt: "A person hesitates and then walks towards the camera.",
     tags: ['Kinematic Integrity', 'Physics Awareness', 'Zero-Shot'],
     src: '/videos/motion/gen_action_01.mp4'
   },

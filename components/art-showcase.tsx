@@ -48,52 +48,94 @@ export function ArtShowcase() {
       {/* Part 3: Full Screen Lens Art 02 */}
       <FullScreenLensArt 
         index={2} 
-        title="Monetization Model"
-        subtitle="Commercial Strategy"
+        title="商业模式"
+        subtitle="变现策略"
         color="bg-gradient-to-bl from-emerald-950 to-black" 
       >
-        <div className="max-w-5xl mx-auto space-y-12 text-white/90 select-text cursor-auto py-12 px-6">
-            <div className="border-l-2 border-emerald-500 pl-6">
-                <p className="text-2xl font-light text-white tracking-wide">Free to Play + Value-Added Services</p>
-                <p className="text-sm text-white/50 mt-2 font-mono uppercase">Core Strategy</p>
+        <div className="max-w-6xl mx-auto w-full text-white/90 select-text cursor-auto py-12 px-6 relative z-30">
+            {/* Core Strategy Header */}
+            <div className="relative mb-16 text-center">
+                 <div className="inline-block border border-emerald-500/30 bg-emerald-950/20 backdrop-blur-md px-12 py-6 rounded-full shadow-[0_0_30px_-10px_rgba(16,185,129,0.3)]">
+                    <p className="text-3xl md:text-5xl font-light text-white tracking-widest font-serif">
+                        免费游玩 <span className="text-emerald-500 mx-2 font-thin">+</span> 增值服务
+                    </p>
+                 </div>
+                 <p className="text-xs text-white/40 mt-6 font-mono uppercase tracking-[0.3em]">
+                    Core Monetization Strategy
+                 </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-16 text-sm">
-                {/* Column 1 */}
-                <div className="space-y-6">
-                    <h4 className="text-lg font-mono text-emerald-400 font-bold uppercase tracking-wider border-b border-emerald-500/20 pb-2">Diegetic Advertising</h4>
-                    <p className="text-white/60 leading-relaxed text-xs">
-                        AI-driven ad placements integrated strictly within the narrative to maintain immersion (Reverse CBT).
+            <div className="grid md:grid-cols-2 gap-8 md:gap-12">
+                {/* Column 1: Diegetic Ads */}
+                <div className="group relative p-8 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-500 hover:border-emerald-500/30 backdrop-blur-sm">
+                    <div className="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-100 transition-opacity">
+                         <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.8)]"/>
+                    </div>
+                    
+                    <h4 className="text-2xl font-mono text-emerald-400 font-bold uppercase tracking-wider mb-8 flex items-center gap-4">
+                        <span className="w-1.5 h-8 bg-emerald-500 block shadow-[0_0_15px_rgba(16,185,129,0.5)]"/>
+                        叙事化广告
+                        <span className="text-xs text-white/30 font-normal normal-case ml-auto border border-white/10 px-2 py-1 rounded">Reverse CBT</span>
+                    </h4>
+                    
+                    <p className="text-white/60 text-sm leading-relaxed mb-8 border-l border-white/10 pl-4 italic">
+                        "AI驱动的原生植入，严格整合在叙事中以保持沉浸感。"
                     </p>
-                    <ul className="space-y-4 text-xs">
-                        <li className="flex gap-3">
-                            <span className="text-emerald-500 font-bold shrink-0">Environment:</span> 
-                            <span className="text-white/50">Dynamic ads on in-game screens based on player interests.</span>
-                        </li>
-                        <li className="flex gap-3">
-                            <span className="text-emerald-500 font-bold shrink-0">Character:</span> 
-                            <span className="text-white/50">Context-aware product mentions by NPCs in natural dialogue.</span>
-                        </li>
-                    </ul>
+
+                    <div className="space-y-4">
+                        <div className="flex items-start gap-4 p-5 rounded-xl bg-black/40 border border-white/5 group-hover:border-emerald-500/20 transition-all hover:translate-x-1">
+                            <div className="text-emerald-500 mt-1 p-2 bg-emerald-500/10 rounded-lg">
+                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                            </div>
+                            <div>
+                                <div className="text-emerald-100 font-bold text-base mb-1">场景植入</div>
+                                <div className="text-white/40 text-xs leading-relaxed">基于玩家兴趣的动态屏幕广告，无缝融入环境。</div>
+                            </div>
+                        </div>
+                        <div className="flex items-start gap-4 p-5 rounded-xl bg-black/40 border border-white/5 group-hover:border-emerald-500/20 transition-all hover:translate-x-1">
+                            <div className="text-emerald-500 mt-1 p-2 bg-emerald-500/10 rounded-lg">
+                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" /></svg>
+                            </div>
+                            <div>
+                                <div className="text-emerald-100 font-bold text-base mb-1">角色植入</div>
+                                <div className="text-white/40 text-xs leading-relaxed">NPC自然对话中的上下文感知提及，拒绝生硬推销。</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                {/* Column 2 */}
-                <div className="space-y-6">
-                    <h4 className="text-lg font-mono text-emerald-400 font-bold uppercase tracking-wider border-b border-emerald-500/20 pb-2">In-App Purchases</h4>
-                    <ul className="space-y-4 text-xs">
-                        <li>
-                            <div className="text-emerald-500 font-bold mb-1">Scenario Packs</div>
-                            <div className="text-white/50">Unlock exclusive memory fragments or parallel timelines.</div>
-                        </li>
-                        <li>
-                            <div className="text-emerald-500 font-bold mb-1">Psychological Tools</div>
-                            <div className="text-white/50">"God View" to see hidden stats; "Time Rewind" to reset dialogues.</div>
-                        </li>
-                        <li>
-                            <div className="text-emerald-500 font-bold mb-1">Persona Tuning</div>
-                            <div className="text-white/50">Subscription to fine-tune NPC personality traits.</div>
-                        </li>
-                    </ul>
+                {/* Column 2: IAP */}
+                <div className="group relative p-8 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-500 hover:border-purple-500/30 backdrop-blur-sm">
+                     <div className="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-100 transition-opacity">
+                         <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(168,85,247,0.8)]"/>
+                    </div>
+
+                    <h4 className="text-2xl font-mono text-purple-400 font-bold uppercase tracking-wider mb-8 flex items-center gap-4">
+                        <span className="w-1.5 h-8 bg-purple-500 block shadow-[0_0_15px_rgba(168,85,247,0.5)]"/>
+                        应用内购
+                        <span className="text-xs text-white/30 font-normal normal-case ml-auto border border-white/10 px-2 py-1 rounded">Value Services</span>
+                    </h4>
+
+                    <div className="space-y-4">
+                        {[
+                            { title: "剧本扩展包", desc: "解锁记忆碎片 / 平行时间线", color: "text-purple-300", border: "group-hover:border-purple-500/30", bg: "bg-purple-500/10" },
+                            { title: "心理学工具", desc: "上帝视角 (隐藏数值) / 时光倒流", color: "text-blue-300", border: "group-hover:border-blue-500/30", bg: "bg-blue-500/10" },
+                            { title: "人格调优订阅", desc: "深度微调NPC性格特质的订阅服务", color: "text-pink-300", border: "group-hover:border-pink-500/30", bg: "bg-pink-500/10" }
+                        ].map((item, i) => (
+                            <div key={i} className={`p-5 rounded-xl bg-black/40 border border-white/5 ${item.border} transition-all hover:scale-[1.02] flex items-center justify-between group/item`}>
+                                <div>
+                                    <div className={`font-bold text-base mb-1 ${item.color} flex items-center gap-2`}>
+                                        <span className={`w-2 h-2 rounded-full ${item.bg}`}></span>
+                                        {item.title}
+                                    </div>
+                                    <div className="text-white/40 text-xs ml-4">{item.desc}</div>
+                                </div>
+                                <div className="opacity-0 group-hover/item:opacity-100 transition-opacity text-white/20 transform translate-x-[-10px] group-hover/item:translate-x-0 duration-300">
+                                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>
