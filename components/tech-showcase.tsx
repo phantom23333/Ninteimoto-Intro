@@ -160,16 +160,16 @@ export function TechShowcase() {
   const logsContainerRef = useRef<HTMLDivElement>(null)
   
   const [isPlaying, setIsPlaying] = useState(false)
-  const [isMainVideoMuted, setIsMainVideoMuted] = useState(false)
+  const [isMainVideoMuted, setIsMainVideoMuted] = useState(true) // Default to muted
+  const [videoError, setVideoError] = useState(false)
 
   const togglePlay = () => {
       if (videoRef.current) {
-          if (isPlaying) {
-              videoRef.current.pause()
+          if (videoRef.current.paused) {
+              videoRef.current.play().catch(console.error)
           } else {
-              videoRef.current.play()
+              videoRef.current.pause()
           }
-          setIsPlaying(!isPlaying)
       }
   }
 
@@ -330,16 +330,28 @@ export function TechShowcase() {
              {/* Placeholder for Video */}
              <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-gray-900 to-black">
                 {/* Use video if available, else show placeholder icon */}
-                <video 
-                    ref={videoRef}
-                    src="/videos/project_ninteimoto_core_loop_alpha.mp4" 
-                    loop 
-                    muted={isMainVideoMuted}
-                    playsInline
-                    className="absolute inset-0 w-full h-full object-cover opacity-80" 
-                    onPlay={() => setIsPlaying(true)}
-                    onPause={() => setIsPlaying(false)}
-                />
+                {!videoError ? (
+                    <video 
+                        ref={videoRef}
+                        src="/videos/project_ninteimoto_core_loop_alpha.mp4" 
+                        loop 
+                        muted={isMainVideoMuted}
+                        playsInline
+                        className="absolute inset-0 w-full h-full object-cover opacity-80" 
+                        onPlay={() => setIsPlaying(true)}
+                        onPause={() => setIsPlaying(false)}
+                        onError={(e) => {
+                            console.error("Video Error:", e);
+                            setVideoError(true);
+                        }}
+                    />
+                ) : (
+                    <div className="text-center relative z-10">
+                        <Film className="w-12 h-12 text-red-500/40 mx-auto mb-4" />
+                        <p className="font-mono text-sm text-red-400 uppercase tracking-widest">Video Unavailable</p>
+                        <p className="font-serif italic text-white/20 mt-2">Check format (H.264) or connection</p>
+                    </div>
+                )}
                  {/* <div className="text-center relative z-10">
                     <Film className="w-12 h-12 text-white/20 mx-auto mb-4" />
                     <p className="font-mono text-sm text-white/40 uppercase tracking-widest">Video Feed Offline</p>
