@@ -353,7 +353,7 @@ export function TechShowcase() {
                         controls
                         muted={isMainVideoMuted}
                         playsInline
-                        className="absolute inset-0 w-full h-full object-cover opacity-80" 
+                        className="absolute inset-0 w-full h-full object-cover" 
                         onPlay={() => setIsPlaying(true)}
                         onPause={() => setIsPlaying(false)}
                         onError={(e) => {
@@ -416,9 +416,9 @@ export function TechShowcase() {
                  ))}
              </div>
              
-             {/* Scanlines */}
-             <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(to_bottom,transparent_50%,rgba(0,0,0,0.5)_50%)] bg-[length:100%_4px] opacity-20" />
-             <div className="absolute inset-0 pointer-events-none bg-emerald-500/5 mix-blend-overlay" />
+             {/* Scanlines removed for better viewing experience */}
+             {/* <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(to_bottom,transparent_50%,rgba(0,0,0,0.5)_50%)] bg-[length:100%_4px] opacity-20" /> */}
+             {/* <div className="absolute inset-0 pointer-events-none bg-emerald-500/5 mix-blend-overlay" /> */}
           </div>
           
           {/* Backlight Effect */}
