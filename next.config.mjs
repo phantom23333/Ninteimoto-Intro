@@ -3,9 +3,7 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  images: {
-    unoptimized: true,
-  },
+  // Removed images.unoptimized: true to enable Vercel Image Optimization
 }
 
 export default nextConfig
