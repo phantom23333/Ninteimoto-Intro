@@ -166,9 +166,24 @@ export function TechShowcase() {
   const togglePlay = () => {
       if (videoRef.current) {
           if (videoRef.current.paused) {
-              videoRef.current.play().catch(console.error)
+              videoRef.current.play()
+                .then(() => setIsPlaying(true))
+                .catch(e => {
+                    console.error("Play failed:", e);
+                    // If autoplay blocked, try muting
+                    if (!isMainVideoMuted) {
+                        setIsMainVideoMuted(true);
+                        // Retry play after mute
+                        setTimeout(() => {
+                            videoRef.current?.play()
+                                .then(() => setIsPlaying(true))
+                                .catch(console.error);
+                        }, 50);
+                    }
+                });
           } else {
-              videoRef.current.pause()
+              videoRef.current.pause();
+              setIsPlaying(false);
           }
       }
   }
@@ -326,7 +341,7 @@ export function TechShowcase() {
           </div>
 
           {/* Video Container */}
-          <div className="aspect-video relative bg-black/50 overflow-hidden group/video cursor-pointer" onClick={togglePlay}>
+          <div className="aspect-video relative bg-black/50 overflow-hidden group/video">
              {/* Placeholder for Video */}
              <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-gray-900 to-black">
                 {/* Use video if available, else show placeholder icon */}
@@ -335,6 +350,7 @@ export function TechShowcase() {
                         ref={videoRef}
                         src="/videos/project_ninteimoto_core_loop_alpha.mp4" 
                         loop 
+                        controls
                         muted={isMainVideoMuted}
                         playsInline
                         className="absolute inset-0 w-full h-full object-cover opacity-80" 
@@ -359,14 +375,8 @@ export function TechShowcase() {
                  </div> */}
              </div>
 
-             {/* Play Button Overlay */}
-             {!isPlaying && (
-                 <div className="absolute inset-0 flex items-center justify-center z-30 bg-black/40 backdrop-blur-[2px] transition-all duration-300">
-                     <div className="w-20 h-20 rounded-full bg-white/10 border border-white/20 flex items-center justify-center backdrop-blur-md group-hover/video:scale-110 transition-all">
-                         <Play className="w-8 h-8 text-white fill-white ml-1" />
-                     </div>
-                 </div>
-             )}
+             {/* Play Button Overlay - Removed in favor of native controls */}
+             {/* {!isPlaying && !videoError && ( ... )} */}
 
              {/* Overlays */}
              <div className="absolute top-6 left-6 z-20 pointer-events-none">
