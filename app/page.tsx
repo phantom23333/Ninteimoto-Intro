@@ -8,6 +8,7 @@ import { SectionBlend } from "@/components/section-blend"
 import { Footer } from "@/components/footer"
 
 // Lazy load below-the-fold heavy sections
+const BasicInfoSection = dynamic(() => import("@/components/basic-info-section").then(mod => mod.BasicInfoSection))
 const ConceptSection = dynamic(() => import("@/components/concept-section").then(mod => mod.ConceptSection), {
   loading: () => <div className="h-screen bg-black" />
 })
@@ -24,6 +25,7 @@ export default function Home() {
       <main>
         <Hero />
         <SectionBlend />
+        <BasicInfoSection />
         <ConceptSection />
         <MechanicsSection />
         <TechShowcase />
