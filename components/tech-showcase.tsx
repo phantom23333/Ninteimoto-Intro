@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Play, Pause, Activity, Globe, Mic, Smartphone, Zap, Maximize2, Terminal, Cpu, Box, Film, Disc, Volume2, VolumeX } from "lucide-react"
+import { Play, Pause, Activity, Globe, Mic, Smartphone, Zap, Maximize2, Terminal, Cpu, Box, Film, Disc, Volume2, VolumeX, MessageSquare, Send, Loader2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useLanguage } from "@/components/language-provider"
 
@@ -149,6 +149,9 @@ function WaveformVisualizer({ isPlaying, color = "#10b981" }: { isPlaying: boole
 export function TechShowcase() {
   const { language } = useLanguage()
   const [logs, setLogs] = useState<LogEntry[]>([])
+  const [isPlaying, setIsPlaying] = useState(false)
+  const [isMainVideoMuted, setIsMainVideoMuted] = useState(false) // Default to unmuted
+  const [videoError, setVideoError] = useState(false)
   const [activeLang, setActiveLang] = useState('CN')
   const [activeSampleIndex, setActiveSampleIndex] = useState(0)
   const [activeMotionIndex, setActiveMotionIndex] = useState(0)
@@ -161,9 +164,157 @@ export function TechShowcase() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const logsContainerRef = useRef<HTMLDivElement>(null)
   
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [isMainVideoMuted, setIsMainVideoMuted] = useState(false) // Default to unmuted
-  const [videoError, setVideoError] = useState(false)
+  // --- Types & Data ---
+
+  type Message = {
+    role: 'user' | 'assistant'
+    content: string
+    emoji?: string
+  }
+
+  type Scenario = {
+    id: number
+    title: { zh: string, en: string }
+    dialogue: Message[]
+  }
+
+  const SCENARIOS: Scenario[] = [
+    {
+      id: 1,
+      title: { zh: "巷口的手抓饼", en: "Street Side Pancake" },
+      dialogue: [
+        { role: 'assistant', content: "哥，你下班没？帮我带份手抓饼回来呗。" },
+        { role: 'user', content: "又吃？你这个月第几次了。" },
+        { role: 'assistant', content: "哎呀，今天刷题太累了嘛，急需热量补救！" },
+        { role: 'user', content: "行行行，老样子？加蛋多辣？" },
+        { role: 'assistant', content: "嘿嘿，知我者谓我心忧！快点呀，等你~" },
+        { role: 'assistant', content: "", emoji: "/images/chatrelated/emoji_happy.png" },
+      ]
+    },
+    {
+      id: 2,
+      title: { zh: "数学卷子的哀鸣", en: "Math Paper Blues" },
+      dialogue: [
+        { role: 'assistant', content: "哥...这道导数题是不是在嘲笑我的智商？" },
+        { role: 'user', content: "让我看看。这不是上周刚讲过的型吗？" },
+        { role: 'assistant', content: "它长得太像了，我认错人了呜呜。" },
+        { role: 'user', content: "拿过来，我再给你捋一遍。" },
+        { role: 'assistant', content: "你是全宇宙最好的哥哥！(暂时)" },
+        { role: 'assistant', content: "", emoji: "/images/chatrelated/emoji_love.png" },
+      ]
+    },
+    {
+      id: 3,
+      title: { zh: "突然的暴雨", en: "Sudden Rain" },
+      dialogue: [
+        { role: 'assistant', content: "哥！救命！我没带伞，困在学校门口了。" },
+        { role: 'user', content: "我在路上了，站着别动。" },
+        { role: 'assistant', content: "雨好大啊，感觉整个世界都要被淹掉了。" },
+        { role: 'user', content: "看到我的车没？就在你左前方。" },
+        { role: 'assistant', content: "看到了看到了！我冲过去啦！" },
+        { role: 'assistant', content: "", emoji: "/images/chatrelated/emoji_happy.png" },
+      ]
+    },
+    {
+      id: 6,
+      title: { zh: "西瓜最中心的那一口", en: "The Center of the Watermelon" },
+      dialogue: [
+        { role: 'assistant', content: "哥！西瓜最中间那块我给你留着呢。" },
+        { role: 'user', content: "哟，今天这么大方？" },
+        { role: 'assistant', content: "因为待会我想让你帮我洗碗..." },
+        { role: 'user', content: "我就知道没那么简单。" },
+        { role: 'assistant', content: "哎呀，你就吃嘛，甜不甜？" },
+        { role: 'assistant', content: "", emoji: "/images/chatrelated/emoji_goodday.png" },
+      ]
+    },
+    {
+      id: 11,
+      title: { zh: "便利店的新款冰淇淋", en: "New Ice Cream" },
+      dialogue: [
+        { role: 'assistant', content: "哥，便利店出了海盐味的冰淇淋，超好吃！" },
+        { role: 'user', content: "你这周第几个了？小心肚子疼。" },
+        { role: 'assistant', content: "最后一个，我发誓！" },
+        { role: 'user', content: "你的誓言在冰淇淋面前一文不值。" },
+        { role: 'assistant', content: "哎呀，买一个嘛，一人一半？" },
+        { role: 'assistant', content: "", emoji: "/images/chatrelated/emoji_drinkbeer.png" },
+      ]
+    },
+    {
+      id: 15,
+      title: { zh: "未来的约定", en: "Future Promise" },
+      dialogue: [
+        { role: 'assistant', content: "哥，以后你想去哪个城市生活？" },
+        { role: 'user', content: "还没定。怎么，想跟我一起？" },
+        { role: 'assistant', content: "当然啊，万一我没带钥匙，还得找你呢。" },
+        { role: 'user', content: "出息。行吧，肯定带上你。" },
+        { role: 'assistant', content: "那就这么说定啦，拉钩！" },
+        { role: 'assistant', content: "", emoji: "/images/chatrelated/emoji_love.png" },
+      ]
+    }
+  ]
+
+  const [currentScenarioIndex, setCurrentScenarioIndex] = useState(0)
+  const [currentMessages, setCurrentMessages] = useState<Message[]>([])
+  const [messageIndex, setMessageIndex] = useState(0)
+  const [isTyping, setIsTyping] = useState(false)
+  const [progress, setProgress] = useState(0)
+  const chatScrollRef = useRef<HTMLDivElement>(null)
+
+  // Auto scroll to bottom
+  useEffect(() => {
+    if (chatScrollRef.current) {
+      chatScrollRef.current.scrollTop = chatScrollRef.current.scrollHeight
+    }
+  }, [currentMessages, isTyping])
+
+  // Handle Scenario and Message progression
+  useEffect(() => {
+    const scenario = SCENARIOS[currentScenarioIndex]
+    
+    if (messageIndex < scenario.dialogue.length) {
+      const nextMsg = scenario.dialogue[messageIndex]
+      
+      const timer = setTimeout(() => {
+        // Only show typing indicator if the next message is from the sister (assistant)
+        if (nextMsg.role === 'assistant') {
+          setIsTyping(true)
+        }
+        
+        // Simulation duration
+        const delay = nextMsg.role === 'assistant' ? 1200 : 800 // User "types" slightly faster
+        
+        const typingTimer = setTimeout(() => {
+          setCurrentMessages(prev => [...prev, nextMsg])
+          setIsTyping(false)
+          setMessageIndex(prev => prev + 1)
+        }, delay)
+        
+        return () => clearTimeout(typingTimer)
+      }, 1500) // delay between messages
+      
+      return () => clearTimeout(timer)
+    } else {
+      // Scenario finished, start 10s countdown
+      let currentProgress = 0
+      const progressInterval = setInterval(() => {
+        currentProgress += (100 / 100) // 10 seconds = 100 intervals of 100ms
+        setProgress(currentProgress)
+        
+        if (currentProgress >= 100) {
+          clearInterval(progressInterval)
+          // Move to next scenario
+          setCurrentScenarioIndex(prev => (prev + 1) % SCENARIOS.length)
+          setCurrentMessages([])
+          setMessageIndex(0)
+          setProgress(0)
+        }
+      }, 100)
+      
+      return () => clearInterval(progressInterval)
+    }
+  }, [currentScenarioIndex, messageIndex])
+
+  // --- Main Component ---
 
   const togglePlay = () => {
       if (videoRef.current) {
@@ -752,6 +903,182 @@ export function TechShowcase() {
                     
                     <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-0 group-hover:opacity-10 transition-opacity pointer-events-none" />
             </div>
+        </div>
+
+        {/* 4.3 Domain Adaptation (WeChat Style) */}
+        <div className="mt-12 p-8 rounded-xl border border-white/10 bg-white/[0.02] relative overflow-hidden group hover:border-white/20 transition-colors">
+          {/* Background Decoration */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/5 blur-[100px] -z-10 pointer-events-none" />
+          
+          <div className="flex items-center justify-between mb-10">
+            <div className="flex items-center gap-2">
+              <MessageSquare className="w-4 h-4 text-emerald-500" />
+              <h3 className="font-mono text-xs uppercase tracking-widest text-emerald-500">
+                {language === 'zh' ? "叙事认知引擎 NCE" : "Narrative Cognitive Engine NCE"}
+              </h3>
+            </div>
+            <div className="flex items-center gap-2 px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 text-[10px] font-mono">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              {language === 'zh' ? "研发布署中" : "R&D DEPLOYING"}
+            </div>
+          </div>
+
+          <div className="max-w-3xl mx-auto">
+            {/* Chat Container (Playback Mode) */}
+            <div className="bg-[#f5f5f5] rounded-xl overflow-hidden shadow-2xl flex flex-col h-[550px] relative">
+              {/* Header with Title and Progress */}
+              <div className="bg-white px-4 py-3 border-b border-black/5 flex items-center justify-between">
+                <div className="flex flex-col">
+                  <span className="text-[10px] text-black/30 font-mono uppercase tracking-widest leading-none mb-1">
+                    {language === 'zh' ? "场景回放" : "SCENARIO PLAYBACK"}
+                  </span>
+                  <span className="text-sm font-bold text-black leading-none">
+                    {language === 'zh' ? SCENARIOS[currentScenarioIndex].title.zh : SCENARIOS[currentScenarioIndex].title.en}
+                  </span>
+                </div>
+                <div className="flex items-center gap-3">
+                    <span className="text-[10px] font-mono text-emerald-600/60 tabular-nums">
+                        {currentScenarioIndex + 1} / {SCENARIOS.length}
+                    </span>
+                    <div className="w-24 h-1 bg-black/5 rounded-full overflow-hidden">
+                        <motion.div 
+                            className="h-full bg-emerald-500"
+                            initial={{ width: "0%" }}
+                            animate={{ width: `${progress}%` }}
+                            transition={{ ease: "linear" }}
+                        />
+                    </div>
+                </div>
+              </div>
+
+              {/* Chat Messages */}
+              <div 
+                ref={chatScrollRef}
+                className="flex-1 overflow-y-auto p-4 space-y-4 scroll-smooth"
+                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+              >
+                {currentMessages.map((msg, idx) => (
+                  <motion.div 
+                    key={idx} 
+                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    className={cn("flex items-start gap-3", msg.role === 'user' ? "flex-row-reverse" : "flex-row")}
+                  >
+                    <div className={cn(
+                      "w-10 h-10 rounded-lg flex-shrink-0 overflow-hidden flex items-center justify-center",
+                      msg.role === 'user' ? "bg-white border border-black/10 shadow-sm" : "bg-emerald-500 shadow-md shadow-emerald-500/20"
+                    )}>
+                      {msg.role === 'user' ? (
+                        <img 
+                          src="/images/chatrelated/avatar_user.jpg" 
+                          alt="User Avatar" 
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                            e.currentTarget.parentElement!.innerHTML = '<span class="font-mono text-[10px] text-black/40">USER</span>';
+                          }}
+                        />
+                      ) : (
+                        <img 
+                          src="/images/chatrelated/avatar_sister.jpg" 
+                          alt="Sister Avatar" 
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            // Fallback if image doesn't exist
+                            e.currentTarget.style.display = 'none';
+                            e.currentTarget.parentElement!.innerHTML = '<span class="font-mono text-[10px] text-black font-bold">NIN</span>';
+                          }}
+                        />
+                      )}
+                    </div>
+                    <div className={cn(
+                      "relative max-w-[75%] p-3 rounded-2xl text-sm shadow-sm flex flex-col gap-2",
+                      msg.role === 'user' 
+                        ? "bg-[#95ec69] text-black font-medium rounded-tr-none" 
+                        : "bg-white border border-black/5 text-black rounded-tl-none",
+                      !msg.content && msg.emoji && "bg-transparent border-none shadow-none p-0"
+                    )}>
+                      {msg.content}
+                      {msg.emoji && (
+                        <div className={cn("max-w-[120px] overflow-hidden", !msg.content ? "" : "mt-1 rounded-lg")}>
+                          <img src={msg.emoji} alt="emoji" className="w-full h-auto object-contain" />
+                        </div>
+                      )}
+                    </div>
+                  </motion.div>
+                ))}
+                
+                {isTyping && (
+                  <motion.div 
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    className="flex items-start gap-3 flex-row"
+                  >
+                    <div className="w-10 h-10 rounded-lg bg-white border border-black/10 flex-shrink-0 overflow-hidden flex items-center justify-center shadow-sm">
+                      <img 
+                        src="/images/chatrelated/avatar_sister.jpg" 
+                        alt="Sister Avatar" 
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                          e.currentTarget.parentElement!.innerHTML = '<span class="font-mono text-[10px] text-black font-bold">NIN</span>';
+                        }}
+                      />
+                    </div>
+                    <div className="bg-white border border-black/5 p-3 rounded-2xl rounded-tl-none flex gap-1 items-center shadow-sm">
+                      <span className="w-1 h-1 bg-black/40 rounded-full animate-bounce [animation-delay:-0.3s]" />
+                      <span className="w-1 h-1 bg-black/40 rounded-full animate-bounce [animation-delay:-0.15s]" />
+                      <span className="w-1 h-1 bg-black/40 rounded-full animate-bounce" />
+                    </div>
+                  </motion.div>
+                )}
+              </div>
+
+              {/* Status Bar */}
+              <div className="px-4 py-3 bg-white border-t border-black/5 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                    <span className="text-[10px] font-mono text-black/40 uppercase tracking-widest">
+                        {messageIndex < SCENARIOS[currentScenarioIndex].dialogue.length 
+                          ? (language === 'zh' ? "正在提取记忆碎片..." : "Extracting memory fragments...") 
+                          : (language === 'zh' ? `场景回放结束 - ${Math.ceil(10 * (1 - progress/100))}秒后切换` : `Scenario finished - Switching in ${Math.ceil(10 * (1 - progress/100))}s`)}
+                    </span>
+                </div>
+                <div className="flex items-center gap-1">
+                    <Loader2 className="w-3 h-3 text-emerald-500 animate-spin" />
+                </div>
+              </div>
+            </div>
+
+            {/* Strategy Highlights */}
+            <div className="mt-8">
+              <button 
+                className="w-full flex items-center justify-center gap-3 bg-white/5 border border-white/10 rounded-xl p-4 group/btn hover:bg-emerald-500/10 hover:border-emerald-500/20 transition-all"
+                onClick={() => {
+                  const chatBox = document.querySelector('.overflow-y-auto');
+                  if (chatBox) chatBox.scrollTop = 0;
+                }}
+              >
+                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse group-hover/btn:scale-125 transition-transform" />
+                <span className="text-xs md:text-sm text-white/80 font-mono tracking-wider">
+                  {language === 'zh' ? "尝试和妹妹进行对话 探寻更多的内容" : "Try talking to sister to explore more"}
+                </span>
+              </button>
+            </div>
+
+            {/* Sub-text Description */}
+            <p className="text-xs text-white/40 mt-6 leading-relaxed border-t border-white/5 pt-4">
+              {language === 'zh' ? (
+                <>
+                  我们不自研从零训练大模型，但<span className="text-pink-400 font-bold">自研领域适配与控制技术</span>：私有剧情与角色语料构建、长程记忆与检索（RAG/Graph Memory）、偏好对齐与风格一致性（轻量适配/LoRA/蒸馏到小模型）、安全与一致性评测体系（自动回归测试）。
+                </>
+              ) : (
+                <>
+                  We don't train large models from scratch, but focus on <span className="text-pink-400 font-bold">Self-developed Domain Adaptation & Control Technologies</span>: private plot & character corpus construction, long-term memory & retrieval (RAG/Graph Memory), preference alignment & style consistency (LoRA/Distillation), and security & consistency evaluation.
+                </>
+              )}
+            </p>
+          </div>
         </div>
 
       </div>
