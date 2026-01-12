@@ -25,7 +25,7 @@ export function MechanicsSection() {
         </motion.div>
 
         {/* Intro Video Player */}
-        <IntroVideoPlayer />
+        {/* <IntroVideoPlayer /> */}
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <MechanicCard
