@@ -184,11 +184,11 @@ export function TechShowcase() {
       title: { zh: "巷口的手抓饼", en: "Street Side Pancake" },
       dialogue: [
         { role: 'assistant', content: "哥，你下班没？帮我带份手抓饼回来呗。" },
+        { role: 'assistant', content: "", emoji: "/images/chatrelated/emoji_wanttoeat.png" },
         { role: 'user', content: "又吃？你这个月第几次了。" },
         { role: 'assistant', content: "哎呀，今天刷题太累了嘛，急需热量补救！" },
         { role: 'user', content: "行行行，老样子？加蛋多辣？" },
         { role: 'assistant', content: "嘿嘿，知我者谓我心忧！快点呀，等你~" },
-        { role: 'assistant', content: "", emoji: "/images/chatrelated/emoji_happy.png" },
       ]
     },
     {
@@ -196,23 +196,23 @@ export function TechShowcase() {
       title: { zh: "数学卷子的哀鸣", en: "Math Paper Blues" },
       dialogue: [
         { role: 'assistant', content: "哥...这道导数题是不是在嘲笑我的智商？" },
+        { role: 'assistant', content: "", emoji: "/images/chatrelated/emoji_curious.png" },
         { role: 'user', content: "让我看看。这不是上周刚讲过的型吗？" },
         { role: 'assistant', content: "它长得太像了，我认错人了呜呜。" },
         { role: 'user', content: "拿过来，我再给你捋一遍。" },
         { role: 'assistant', content: "你是全宇宙最好的哥哥！(暂时)" },
-        { role: 'assistant', content: "", emoji: "/images/chatrelated/emoji_love.png" },
       ]
     },
     {
       id: 3,
       title: { zh: "突然的暴雨", en: "Sudden Rain" },
       dialogue: [
+        { role: 'assistant', content: "", emoji: "/images/chatrelated/emoji_nowordtosay.png" },
         { role: 'assistant', content: "哥！救命！我没带伞，困在学校门口了。" },
         { role: 'user', content: "我在路上了，站着别动。" },
         { role: 'assistant', content: "雨好大啊，感觉整个世界都要被淹掉了。" },
         { role: 'user', content: "看到我的车没？就在你左前方。" },
         { role: 'assistant', content: "看到了看到了！我冲过去啦！" },
-        { role: 'assistant', content: "", emoji: "/images/chatrelated/emoji_happy.png" },
       ]
     },
     {
@@ -222,9 +222,9 @@ export function TechShowcase() {
         { role: 'assistant', content: "哥，你手巧，帮我解一下耳机线呗..." },
         { role: 'user', content: "你是怎么把它打成死结的？" },
         { role: 'assistant', content: "它在兜里自己谈恋爱了，我也没办法。" },
+        { role: 'assistant', content: "", emoji: "/images/chatrelated/emoji_curious.png" },
         { role: 'user', content: "给，解开了。下次记得用绕线器。" },
         { role: 'assistant', content: "收到！下次还找你~" },
-        { role: 'assistant', content: "", emoji: "/images/chatrelated/emoji_happy.png" },
       ]
     },
     {
@@ -243,12 +243,12 @@ export function TechShowcase() {
       id: 6,
       title: { zh: "西瓜最中心的那一口", en: "The Center of the Watermelon" },
       dialogue: [
+        { role: 'assistant', content: "", emoji: "/images/chatrelated/emoji_goodday.png" },
         { role: 'assistant', content: "哥！西瓜最中间那块我给你留着呢。" },
         { role: 'user', content: "哟，今天这么大方？" },
         { role: 'assistant', content: "因为待会我想让你帮我洗碗..." },
         { role: 'user', content: "我就知道没那么简单。" },
         { role: 'assistant', content: "哎呀，你就吃嘛，甜不甜？" },
-        { role: 'assistant', content: "", emoji: "/images/chatrelated/emoji_happy.png" },
       ]
     },
     {
@@ -257,10 +257,10 @@ export function TechShowcase() {
       dialogue: [
         { role: 'assistant', content: "哥，楼下那只小橘猫好像又胖了。" },
         { role: 'user', content: "你天天喂它火腿肠，能不胖吗。" },
-        { role: 'assistant', content: "它刚才蹭我脚踝了，好软啊。" },
+        { role: 'assistant', content: "", emoji: "/images/chatrelated/emoji_love.png" },
+        { role: 'assistant', content: "它刚才蹭 me 脚踝了，好软啊。" },
         { role: 'user', content: "那你下次带点猫粮，火腿肠太咸了。" },
         { role: 'assistant', content: "好哒，明天我们就去买！" },
-        { role: 'assistant', content: "", emoji: "/images/chatrelated/emoji_happy.png" },
       ]
     },
     {
@@ -272,19 +272,19 @@ export function TechShowcase() {
         { role: 'assistant', content: "可是它那家珍珠真的很Q弹嘛..." },
         { role: 'user', content: "站着等我十分钟，我骑车接你。" },
         { role: 'assistant', content: "万岁！奶茶分你一半！" },
-        { role: 'assistant', content: "", emoji: "/images/chatrelated/emoji_happy.png" },
+        { role: 'assistant', content: "", emoji: "/images/chatrelated/emoji_drinkbeer.png" },
       ]
     },
     {
       id: 9,
       title: { zh: "旧相册", en: "Old Album" },
       dialogue: [
+        { role: 'assistant', content: "", emoji: "/images/chatrelated/emoji_happy.png" },
         { role: 'assistant', content: "哥，你看这张照片，你小时候好呆啊。" },
         { role: 'user', content: "那是谁哭着要我抱才肯拍的？" },
         { role: 'assistant', content: "肯定不是我，我那时候多可爱啊。" },
         { role: 'user', content: "行，你是全家最可爱，行了吧。" },
         { role: 'assistant', content: "那是必须的，哼。" },
-        { role: 'assistant', content: "", emoji: "/images/chatrelated/emoji_goodday.png" },
       ]
     },
     {
@@ -305,10 +305,10 @@ export function TechShowcase() {
       dialogue: [
         { role: 'assistant', content: "哥，便利店出了海盐味的冰淇淋，超好吃！" },
         { role: 'user', content: "你这周第几个了？小心肚子疼。" },
+        { role: 'assistant', content: "", emoji: "/images/chatrelated/emoji_curious.png" },
         { role: 'assistant', content: "最后一个，我发誓！" },
         { role: 'user', content: "你的誓言在冰淇淋面前一文不值。" },
         { role: 'assistant', content: "哎呀，买一个嘛，一人一半？" },
-        { role: 'assistant', content: "", emoji: "/images/chatrelated/emoji_drinkbeer.png" },
       ]
     },
     {
@@ -327,12 +327,12 @@ export function TechShowcase() {
       id: 13,
       title: { zh: "遥控器争夺战", en: "Remote Control Battle" },
       dialogue: [
+        { role: 'assistant', content: "", emoji: "/images/chatrelated/emoji_nowordtosay.png" },
         { role: 'assistant', content: "哥，我想看那部新出的番，把遥控器给我。" },
         { role: 'user', content: "球赛还没看完呢，再等十分钟。" },
         { role: 'assistant', content: "十分钟都够我吃完一包辣条了！" },
         { role: 'user', content: "给你给你。真受不了你。" },
         { role: 'assistant', content: "耶！哥哥最棒了！" },
-        { role: 'assistant', content: "", emoji: "/images/chatrelated/emoji_happy.png" },
       ]
     },
     {
@@ -340,11 +340,11 @@ export function TechShowcase() {
       title: { zh: "模拟考成绩", en: "Mock Exam Result" },
       dialogue: [
         { role: 'assistant', content: "哥...我这次模拟考排进前五十了。" },
+        { role: 'assistant', content: "", emoji: "/images/chatrelated/emoji_love.png" },
         { role: 'user', content: "厉害啊，夏沐橙。想要什么奖赏？" },
         { role: 'assistant', content: "还没想好，先存着。以后不许凶我！" },
         { role: 'user', content: "我什么时候凶过你。行，存着吧。" },
         { role: 'assistant', content: "嘿嘿，白纸黑字记下了哦。" },
-        { role: 'assistant', content: "", emoji: "/images/chatrelated/emoji_love.png" },
       ]
     },
     {
@@ -356,7 +356,7 @@ export function TechShowcase() {
         { role: 'assistant', content: "当然啊，万一我没带钥匙，还得找你呢。" },
         { role: 'user', content: "出息。行吧，肯定带上你。" },
         { role: 'assistant', content: "那就这么说定啦，拉钩！" },
-        { role: 'assistant', content: "", emoji: "/images/chatrelated/emoji_love.png" },
+        { role: 'assistant', content: "", emoji: "/images/chatrelated/emoji_drinkbeer.png" },
       ]
     }
   ]
